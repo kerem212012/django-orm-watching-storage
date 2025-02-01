@@ -1,5 +1,7 @@
 from django.db import models
 
+from datacenter.func import get_duration
+
 
 class Passcard(models.Model):
     is_active = models.BooleanField(default=False)
@@ -28,3 +30,7 @@ class Visit(models.Model):
                 if self.leaved_at else 'not leaved'
             )
         )
+
+    def is_visit_long(visit, minutes=60):
+        total_time = get_duration(visit)
+        return total_time.total_seconds() // 60 > minutes
